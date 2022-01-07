@@ -4,7 +4,7 @@ const CreateStudent = (props) => {
 	const [message, setMessage] = useState("");
 	const [studentId, setStudentId] = useState("");
 	const [studentName, setStudentName] = useState("");
-	const [status, setStatus] = useState("");
+	const [status, setStatus] = useState("Active");
 
 	console.log(status);
 
@@ -35,11 +35,11 @@ const CreateStudent = (props) => {
 
 	return (
 		<div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/30">
-			{message !== "" && <p>{message}</p>}
 			<form
 				onSubmit={handleSubmit}
 				className="flex flex-col space-y-5 bg-gradient-to-r from-cyan-500 to-blue-500 p-10 rounded-xl shadow-lg"
 			>
+				{message !== "" && <p className="text-center font-bold">{message}</p>}
 				<h2 className="text-center text-2xl font-bold">Add Student</h2>
 				<div className="flex space-x-10">
 					<label className="w-28">Student ID: </label>

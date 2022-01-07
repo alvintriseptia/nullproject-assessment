@@ -31,8 +31,6 @@ const EditStudent = ({ student, setShowEditStudent }) => {
 		setStatus(student.status);
 	}, [student]);
 
-	console.log(status);
-
 	return (
 		<>
 			{student.student_id && (

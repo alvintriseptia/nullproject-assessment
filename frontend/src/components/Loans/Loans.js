@@ -11,6 +11,7 @@ const Loans = ({ students, books, loans }) => {
 	const [dataBook, setDataBook] = useState([]);
 	const [dataStudent, setDataStudent] = useState([]);
 	const [library, setLibrary] = useState([]);
+	const [studentsActive, setStudentsActive] = useState([]);
 	const [step, setStep] = useState(1);
 	const [show, setShow] = useState("");
 
@@ -31,6 +32,7 @@ const Loans = ({ students, books, loans }) => {
 	const inputLoan = () => {
 		setStep(1);
 		getLibrary();
+		getStudentsActive();
 		setShow("inputLoan");
 	};
 
@@ -39,6 +41,11 @@ const Loans = ({ students, books, loans }) => {
 			(book) => !loans.find((loan) => loan.book_id === book.book_id)
 		);
 		setLibrary(library);
+	};
+
+	const getStudentsActive = () => {
+		const student = students.filter((student) => student.status === "Active");
+		setStudentsActive(student);
 	};
 
 	const handleLibrary = () => {
@@ -94,7 +101,7 @@ const Loans = ({ students, books, loans }) => {
 							<ListStudents
 								showLoans={true}
 								hidden={true}
-								students={students}
+								students={studentsActive}
 								getStudentById={getStudentById}
 							/>
 						)}

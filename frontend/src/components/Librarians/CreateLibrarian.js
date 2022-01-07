@@ -9,7 +9,6 @@ const CreateStudent = (props) => {
 	const [status, setStatus] = useState("Active");
 
 	const handleSubmit = async (e) => {
-		e.preventDefault();
 		const book = {
 			employee_id: employeeId,
 			employee_name: employeeName,

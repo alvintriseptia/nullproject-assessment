@@ -13,7 +13,7 @@ const Library = ({ libraries, getBookById, showLoans }) => {
 						<th className="px-5 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 							Author
 						</th>
-						<th className="px-5 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+						<th className="px-5 py-3  border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 							Book Name
 						</th>
 						<th className="px-5 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -22,9 +22,11 @@ const Library = ({ libraries, getBookById, showLoans }) => {
 						<th className="px-5 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
 							ISBN Number
 						</th>
-						<th className="px-5 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-							Actions
-						</th>
+						{showLoans && (
+							<th className="px-5 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+								Actions
+							</th>
+						)}
 					</tr>
 				</thead>
 				{libraries.map((book) => (
@@ -45,7 +47,7 @@ const Library = ({ libraries, getBookById, showLoans }) => {
 							<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm leading-5 font-medium text-gray-900">
 								{book.isbn_number}
 							</td>
-							<td className="px-5 py-5 border-b border-gray-200 bg-white text-sm leading-5 font-medium text-gray-900">
+							<td className="px-2 py-5 border-b border-gray-200 bg-white text-sm leading-5 font-medium text-gray-900">
 								{showLoans && (
 									<button
 										className="border border-blue-500 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded mr-4"

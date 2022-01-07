@@ -33,7 +33,7 @@ const Librarians = () => {
 					className="border border-blue-500 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded mt-8"
 					onClick={handleAddLibrarian}
 				>
-					Add Student
+					Add Librarian
 				</button>
 			</div>
 			{showAddLibrarian && (
