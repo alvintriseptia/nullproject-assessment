@@ -1,29 +1,66 @@
-import React from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
-const Dashboard = () => {
-	const { user, logout } = React.useContext(AuthContext);
-	const navigate = useNavigate();
+import Navbar from "./Navbar";
 
-	const Logout = () => {
-		logout();
-		navigate("/");
-	};
-
-	console.log(user);
-
+function Dashboard() {
+	const { data } = useContext(AuthContext);
 	return (
-		<div className="min-h-screen flex flex-col space-y-6 items-center justify-center bg-indigo-300">
-			Dashboard Page
-			{user && <div> {user.email}</div>}
-			<button
-				className="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-				onClick={Logout}
-			>
-				Logout
-			</button>
-		</div>
+		<>
+			<Navbar />
+			<section className="min-h-screen flex flex-col space-y-6 items-center pt-32">
+				<h1 className="text-4xl font-bold mb-8">Dashboard</h1>
+				<div className="flex space-x-6 text-white">
+					{data.role === "principal" ? (
+						<Link
+							className="bg-gradient-to-r from-sky-500 to-indigo-500 flex items-center justify-center w-24 h-24 rounded-full shadow-lg"
+							to="/dashboard/librarians"
+						>
+							Librarians
+						</Link>
+					) : data.role === "librarian" ? (
+						<>
+							<Link
+								className="bg-gradient-to-r from-sky-500 to-indigo-500 flex items-center justify-center w-24 h-24 rounded-full shadow-lg"
+								to="/dashboard/books"
+							>
+								Books
+							</Link>
+							<Link
+								className="bg-gradient-to-r from-sky-500 to-indigo-500 flex items-center justify-center w-24 h-24 rounded-full shadow-lg"
+								to="/dashboard/students"
+							>
+								Students
+							</Link>
+							<Link
+								className="bg-gradient-to-r from-sky-500 to-indigo-500 flex items-center justify-center w-24 h-24 rounded-full shadow-lg"
+								to="/dashboard/loans"
+							>
+								Loans
+							</Link>
+						</>
+					) : (
+						data.role === "librarian assistant" && (
+							<>
+								<Link
+									className="bg-gradient-to-r from-sky-500 to-indigo-500 flex items-center justify-center w-24 h-24 rounded-full shadow-lg"
+									to="/dashboard/students"
+								>
+									Students
+								</Link>
+								<Link
+									className="bg-gradient-to-r from-sky-500 to-indigo-500 flex items-center justify-center w-24 h-24 rounded-full shadow-lg"
+									to="/dashboard/loans"
+								>
+									Loans
+								</Link>
+							</>
+						)
+					)}
+				</div>
+			</section>
+		</>
 	);
-};
+}
 
 export default Dashboard;

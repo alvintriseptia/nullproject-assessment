@@ -1,26 +1,33 @@
 const db = require("../config/db");
 const Sequelize = require("sequelize");
-// create model for librarian
-const Librarian = db.define("librarian", {
-	employee_id: {
-		type: Sequelize.STRING,
+
+// create model for a loan
+const Loan = db.define("loan", {
+	loan_id: {
+		type: Sequelize.UUID,
+		defaultValue: Sequelize.UUIDV4,
 		primaryKey: true,
 	},
-	employee_name: {
+	book_id: {
 		type: Sequelize.STRING,
+		foreignKey: true,
 		allowNull: false,
 	},
-	email: {
+	student_id: {
 		type: Sequelize.STRING,
-		allowNull: false,
-		unique: true,
-	},
-	password: {
-		type: Sequelize.STRING,
+		foreignKey: true,
 		allowNull: false,
 	},
-	status: {
-		type: Sequelize.STRING,
+	rent_date: {
+		type: Sequelize.DATE,
+		allowNull: false,
+	},
+	return_date: {
+		type: Sequelize.DATE,
+		allowNull: false,
+	},
+	charges: {
+		type: Sequelize.INTEGER,
 		allowNull: false,
 	},
 	createdAt: {
@@ -33,4 +40,4 @@ const Librarian = db.define("librarian", {
 	},
 });
 
-module.exports = Librarian;
+module.exports = Loan;

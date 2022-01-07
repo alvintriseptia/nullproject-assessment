@@ -61,6 +61,7 @@ const updateBook = async (req, res) => {
 				author: author,
 				publisher: publisher,
 				isbn_number: isbn_number,
+				updateAt: new Date(),
 			},
 			{
 				where: {

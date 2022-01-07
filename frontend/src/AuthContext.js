@@ -1,31 +1,41 @@
-const { createContext, useState } = require("react");
+import { createContext, useState } from "react";
 
 export const AuthContext = createContext({
-	email: "",
-	isAuthenticated: false,
+	user: "",
+	role: "",
+	token: "",
 });
 
 export const AuthProvider = ({ children }) => {
-	const [user, setUser] = useState({ email: "", isAuthenticated: false });
+	const [data, setData] = useState({
+		user: localStorage.getItem("user"),
+		role: localStorage.getItem("role"),
+		token: localStorage.getItem("token"),
+	});
 
-	const login = (email) => {
-		setUser({
-			email: email,
-			isAuthenticated: true,
+	const login = (user, role, token) => {
+		setData({
+			user: user,
+			role: role,
+			token: token,
 		});
 	};
 
 	const logout = () => {
-		setUser({
-			email: "",
-			isAuthenticated: false,
+		localStorage.removeItem("token");
+		localStorage.removeItem("user");
+		localStorage.removeItem("role");
+		setData({
+			user: {},
+			role: "",
+			token: "",
 		});
 	};
 
 	return (
 		<AuthContext.Provider
 			value={{
-				user,
+				data,
 				login,
 				logout,
 			}}
