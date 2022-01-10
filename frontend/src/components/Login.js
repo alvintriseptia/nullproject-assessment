@@ -20,7 +20,7 @@ const Login = () => {
 			return "principal";
 		} else if (email.includes("librarian.ac.id")) {
 			return "librarian";
-		} else if (email.includes("librarian.asst.ac.id")) {
+		} else if (email.includes("librarianasst.ac.id")) {
 			return "librarian assistant";
 		}
 	};
