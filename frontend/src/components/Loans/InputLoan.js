@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 
 const InputLoan = ({ dataBook, dataStudent }) => {
-	const [rentDate, setRentDate] = useState("");
-	const [returnDate, setReturnDate] = useState("");
+	const [rentDate, setRentDate] = useState(null);
+	const [returnDate, setReturnDate] = useState(null);
 	const [charges, setCharges] = useState(0);
 	const { book_id, book_name } = dataBook;
 	const { student_id, student_name } = dataStudent;
+	const [message, setMessage] = useState("");
 
 	const handleSubmit = async (e) => {
+		e.preventDefault();
 		const loan = {
 			book_id: book_id,
 			student_id: student_id,
@@ -16,13 +18,20 @@ const InputLoan = ({ dataBook, dataStudent }) => {
 			charges: charges,
 		};
 		try {
-			await fetch("http://localhost:8000/loans", {
+			const response = await fetch("http://localhost:8000/loans", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(loan),
 			});
+			const data = await response.json();
+			if (data.message) {
+				if (data.message.includes("success")) {
+					window.location.reload();
+				}
+				setMessage(data.message);
+			}
 		} catch (error) {
 			throw error;
 		}
@@ -42,6 +51,7 @@ const InputLoan = ({ dataBook, dataStudent }) => {
 				rounded-xl
 				shadow-lg"
 			>
+				{message !== "" && <p className="text-center font-bold">{message}</p>}
 				<div className="flex space-x-10 items-center">
 					<label className="w-28">Student ID: </label>
 					<input

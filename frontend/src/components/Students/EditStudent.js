@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 const EditStudent = ({ student, setShowEditStudent }) => {
 	const [studentId, setStudentId] = useState("");
 	const [studentName, setStudentName] = useState("");
+	const [message, setMessage] = useState("");
 	const [status, setStatus] = useState("");
 	const id = student.student_id;
 
@@ -39,6 +40,9 @@ const EditStudent = ({ student, setShowEditStudent }) => {
 						onSubmit={updatestudent}
 						className="flex flex-col space-y-5 bg-gradient-to-br from-violet-300 to-pink-300 p-10 rounded-xl shadow-lg"
 					>
+						{message !== "" && (
+							<p className="text-center font-bold">{message}</p>
+						)}
 						<h2 className="text-center text-2xl font-bold">Edit Student</h2>
 						<div className="flex space-x-10 items-center">
 							<label className="w-28">Student Id: </label>

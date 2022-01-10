@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../Navbar";
 import CreateLibrarian from "./CreateLibrarian.js";
 import ListLibrarians from "./ListLibrarians";
 
-const Librarians = () => {
-	const [librarians, setLibrarians] = useState([]);
+const Librarians = ({ librarians }) => {
 	const [showAddLibrarian, setShowAddLibrarian] = useState(false);
 
-	const getLibrarians = async () => {
-		try {
-			const res = await fetch("http://localhost:8000/librarians");
-			const data = await res.json();
-			setLibrarians(data.data);
-		} catch (err) {
-			throw err;
-		}
-	};
 	const handleAddLibrarian = () => {
 		setShowAddLibrarian(!showAddLibrarian);
 	};
-
-	useEffect(() => {
-		getLibrarians();
-	}, []);
 
 	return (
 		<div className="mb-8">

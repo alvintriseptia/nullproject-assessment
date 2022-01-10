@@ -75,8 +75,11 @@ function App() {
 				)}
 				{data.role === "librarian" && (
 					<>
-						<Route path="/dashboard/books" element={<Books />} />
-						<Route path="/dashboard/students" element={<Students />} />
+						<Route path="/dashboard/books" element={<Books books={books} />} />
+						<Route
+							path="/dashboard/students"
+							element={<Students students={students} />}
+						/>
 						<Route
 							path="/dashboard/loans"
 							element={
@@ -87,7 +90,10 @@ function App() {
 				)}
 				{data.role === "librarian assistant" && (
 					<>
-						<Route path="/dashboard/students" element={<Students />} />
+						<Route
+							path="/dashboard/students"
+							element={<Students students={students} />}
+						/>
 						<Route
 							path="/dashboard/loans"
 							element={

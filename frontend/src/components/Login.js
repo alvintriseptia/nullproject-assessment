@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
 
 const Login = () => {
-	const { data, login } = useContext(AuthContext);
+	const { login } = useContext(AuthContext);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [message, setMessage] = useState("");
@@ -25,8 +25,6 @@ const Login = () => {
 		}
 	};
 
-	console.log(data);
-
 	const Auth = async (e) => {
 		e.preventDefault();
 		//authenticate user
@@ -34,33 +32,29 @@ const Login = () => {
 			email: email,
 			password: password,
 		};
-		if (email === "" || password === "") {
-			setMessage("Please fill all fields");
-		} else {
-			try {
-				const response = await fetch("http://localhost:8000/login", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(user),
-				});
-				const data = await response.json();
-				if (data.message) {
-					setMessage(data.message);
-				}
-				localStorage.setItem("user", data.data.email);
-				localStorage.setItem("token", data.token);
-				localStorage.setItem("role", getRoleFromEmail(data.data.email));
-				navigate("/dashboard", { replace: true });
-				login(
-					localStorage.getItem("user"),
-					localStorage.getItem("role"),
-					localStorage.getItem("token")
-				);
-			} catch (error) {
-				throw error;
+		try {
+			const response = await fetch("http://localhost:8000/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(user),
+			});
+			const data = await response.json();
+			if (data.message) {
+				setMessage(data.message);
 			}
+			localStorage.setItem("user", data.data.email);
+			localStorage.setItem("token", data.token);
+			localStorage.setItem("role", getRoleFromEmail(data.data.email));
+			navigate("/dashboard", { replace: true });
+			login(
+				localStorage.getItem("user"),
+				localStorage.getItem("role"),
+				localStorage.getItem("token")
+			);
+		} catch (error) {
+			throw error;
 		}
 	};
 

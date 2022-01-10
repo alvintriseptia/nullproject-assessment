@@ -10,7 +10,7 @@ const ListBooks = ({ books, getBookById }) => {
 	};
 
 	return (
-		<div className="mt-8 px-8">
+		<div className="mt-8 px-8 overflow-x-auto">
 			{books.length === 0 && (
 				<div className="text-center py-4 text-red-600 font-bold">No Books</div>
 			)}

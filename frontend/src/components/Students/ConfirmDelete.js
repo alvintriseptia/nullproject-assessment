@@ -4,32 +4,38 @@ const ConfirmDelete = (props) => {
 	const [error, setError] = useState("");
 
 	const deleteStudent = async (e) => {
+		e.preventDefault();
 		try {
-			fetch(`http://localhost:8000/students/${props.id}`, {
-				method: "DELETE",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.message) {
-						setError(data.message);
-					}
-				});
+			const response = await fetch(
+				`http://localhost:8000/students/${props.id}`,
+				{
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+				}
+			);
+			const data = await response.json();
+			if (data.message) {
+				if (data.message.includes("success")) {
+					window.location.reload();
+				}
+				setError(data.message);
+			}
 		} catch (error) {
 			setError(error);
 		}
 	};
 
 	return (
-		<section className="bg-black/50 fixed top-0 left-0 h-full w-full z-50 flex justify-center items-center">
-			{error !== "" && <p>{error}</p>}
+		<section className="bg-black/50 fixed top-0 left-0 h-screen w-screen z-50 flex justify-center items-center">
 			<div className="py-6 px-8 bg-white rounded-lg">
 				<h1 className="text-xl font-medium text-gray-900 mb-4">
 					Are you sure?
 				</h1>
 				<form onSubmit={deleteStudent}>
+					{error !== "" && <p>{error}</p>}
+
 					<div className="flex justify-end space-x-2 mt-4">
 						<button
 							className="px-4 py-2 border border-white hover:border-red-600 text-gray-900 rounded-xl cursor-pointer"

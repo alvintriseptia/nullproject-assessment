@@ -1,9 +1,8 @@
 import React from "react";
 
 const Library = ({ libraries, getBookById, showLoans }) => {
-	console.log(libraries);
 	return (
-		<div className="mt-8 px-8">
+		<div className="mt-8 px-8 overflow-x-auto">
 			<table className="min-w-full">
 				<thead>
 					<tr>

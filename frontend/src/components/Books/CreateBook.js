@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 const CreateBook = (props) => {
 	const [bookName, setBookName] = useState("");
 	const [bookAuthor, setBookAuthor] = useState("");
@@ -15,21 +14,22 @@ const CreateBook = (props) => {
 			isbn_number: isbn,
 		};
 		try {
-			await fetch("http://localhost:8000/books", {
+			const response = await fetch("http://localhost:8000/books", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(book),
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.message) {
-						setMessage(data.message);
-					}
-				});
+			});
+			const data = await response.json();
+			if (data.message) {
+				if (data.message.includes("success")) {
+					window.location.reload();
+				}
+				setMessage(data.message);
+			}
 		} catch (error) {
-			setMessage(error);
+			throw error;
 		}
 	};
 
@@ -48,6 +48,7 @@ const CreateBook = (props) => {
 						type="text"
 						onChange={(e) => setBookName(e.target.value)}
 						value={bookName}
+						required
 					/>
 				</div>
 				<div className="flex space-x-10 items-center">
@@ -57,6 +58,7 @@ const CreateBook = (props) => {
 						type="text"
 						onChange={(e) => setBookAuthor(e.target.value)}
 						value={bookAuthor}
+						required
 					/>
 				</div>
 				<div className="flex space-x-10 items-center">
@@ -66,6 +68,7 @@ const CreateBook = (props) => {
 						type="text"
 						onChange={(e) => setPublisher(e.target.value)}
 						value={publisher}
+						required
 					/>
 				</div>
 				<div className="flex space-x-10 items-center">
@@ -75,6 +78,7 @@ const CreateBook = (props) => {
 						type="text"
 						onChange={(e) => setIsbn(e.target.value)}
 						value={isbn}
+						required
 					/>
 				</div>
 				<div className="flex justify-center space-x-10 ">

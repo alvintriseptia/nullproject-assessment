@@ -10,7 +10,6 @@ const Book = db.define("book", {
 	book_name: {
 		type: Sequelize.STRING,
 		allowNull: false,
-		unique: true,
 	},
 	author: {
 		type: Sequelize.STRING,
@@ -23,6 +22,7 @@ const Book = db.define("book", {
 	isbn_number: {
 		type: Sequelize.INTEGER,
 		allowNull: false,
+		unique: true,
 	},
 	createdAt: {
 		type: Sequelize.DATE,

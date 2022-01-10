@@ -6,14 +6,12 @@ const {
 } = require("../controllers/librarians");
 const {
 	getAllBooks,
-	getBookById,
 	createBook,
 	updateBook,
 	deleteBook,
 } = require("../controllers/books");
 const {
 	getAllStudents,
-	getStudentById,
 	createStudent,
 	updateStudent,
 	deleteStudent,
@@ -40,8 +38,6 @@ router.get("/librarians", getAllLibrarian);
 // BOOKS ROUTES
 // GET /books
 router.get("/books", getAllBooks);
-// GET /books/:id
-router.get("/books/:book_id", getBookById);
 // POST /books
 router.post("/books", createBook);
 // PATCH /books/:id
@@ -52,8 +48,6 @@ router.delete("/books/:book_id", deleteBook);
 // STUDENTS ROUTES
 // GET /students
 router.get("/students", getAllStudents);
-// GET /students/:id
-router.get("/students/:student_id", getStudentById);
 // POST /students
 router.post("/students", createStudent);
 // PUT /students/:id

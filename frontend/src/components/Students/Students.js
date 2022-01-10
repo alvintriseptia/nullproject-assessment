@@ -1,25 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../Navbar";
 import CreateStudent from "./CreateStudent";
 import EditStudent from "./EditStudent";
 import ListStudents from "./ListStudents";
 
-const Students = () => {
-	const [students, setStudents] = useState([]);
+const Students = ({ students }) => {
 	const [editStudent, setEditStudent] = useState([]);
 	const [showAddStudent, setShowAddStudent] = useState(false);
 	const [showEditStudent, setShowEditStudent] = useState(false);
-
-	const getStudents = async () => {
-		try {
-			const res = await fetch("http://localhost:8000/students");
-			const data = await res.json();
-			setStudents(data.data);
-		} catch (err) {
-			throw err;
-		}
-	};
-
 	const getStudentById = (id) => {
 		const student = students.filter((student) => student.student_id === id);
 		if (student.length > 0) {
@@ -30,9 +18,6 @@ const Students = () => {
 	const handleAddStudent = () => {
 		setShowAddStudent(!showAddStudent);
 	};
-	useEffect(() => {
-		getStudents();
-	}, []);
 
 	return (
 		<div className="mb-8">

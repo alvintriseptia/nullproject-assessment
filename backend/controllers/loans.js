@@ -17,7 +17,7 @@ const getAllLoans = async (req, res) => {
 const createLoan = async (req, res) => {
 	const { book_id, student_id, rent_date, return_date, charges } = req.body;
 	try {
-		const loan = await Loan.create({
+		await Loan.create({
 			book_id: book_id,
 			student_id: student_id,
 			rent_date: rent_date,
@@ -26,7 +26,6 @@ const createLoan = async (req, res) => {
 		});
 		res.status(200).json({
 			message: "create loan success",
-			data: loan,
 		});
 	} catch (error) {
 		res.json({ message: error.message });

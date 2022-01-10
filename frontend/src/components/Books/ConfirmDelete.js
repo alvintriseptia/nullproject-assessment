@@ -5,27 +5,28 @@ const ConfirmDelete = (props) => {
 
 	const deleteBook = async (e) => {
 		try {
-			fetch(`http://localhost:8000/books/${props.id}`, {
+			const response = await fetch(`http://localhost:8000/books/${props.id}`, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
 				},
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.message) {
-						setError(data.message);
-					}
-				});
+			});
+			const data = await response.json();
+			if (data.message) {
+				if (data.message.includes("success")) {
+					window.location.reload();
+				}
+				setError(data.message);
+			}
 		} catch (error) {
-			setError(error);
+			throw error;
 		}
 	};
 
 	return (
-		<section className="bg-black/50 absolute -top-10 left-0 right-0 bottom-0 z-50 flex justify-center items-center">
-			{error !== "" && <p>{error}</p>}
+		<section className="bg-black/50 fixed top-0 left-0 h-screen w-screen z-50 flex justify-center items-center">
 			<div className="py-6 px-8 bg-white rounded-lg">
+				{error !== "" && <p>{error}</p>}
 				<h1 className="text-xl font-medium text-gray-900 mb-4">
 					Are you sure?
 				</h1>

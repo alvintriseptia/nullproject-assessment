@@ -6,8 +6,6 @@ const CreateStudent = (props) => {
 	const [studentName, setStudentName] = useState("");
 	const [status, setStatus] = useState("Active");
 
-	console.log(status);
-
 	const handleSubmit = async (e) => {
 		const book = {
 			student_id: studentId,
@@ -21,13 +19,7 @@ const CreateStudent = (props) => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(book),
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.message) {
-						setMessage(data.message);
-					}
-				});
+			});
 		} catch (error) {
 			setMessage(error);
 		}
@@ -49,6 +41,7 @@ const CreateStudent = (props) => {
 						type="text"
 						onChange={(e) => setStudentId(e.target.value)}
 						value={studentId}
+						required
 					/>
 				</div>
 				<div className="flex space-x-10">
@@ -57,6 +50,7 @@ const CreateStudent = (props) => {
 						type="text"
 						onChange={(e) => setStudentName(e.target.value)}
 						value={studentName}
+						required
 					/>
 				</div>
 				<div className="flex space-x-10">

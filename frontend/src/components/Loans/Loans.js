@@ -11,6 +11,7 @@ const Loans = ({ students, books, loans }) => {
 	const [dataBook, setDataBook] = useState([]);
 	const [dataStudent, setDataStudent] = useState([]);
 	const [library, setLibrary] = useState([]);
+	const [listLoans, setListLoans] = useState([]);
 	const [studentsActive, setStudentsActive] = useState([]);
 	const [step, setStep] = useState(1);
 	const [show, setShow] = useState("");
@@ -43,6 +44,21 @@ const Loans = ({ students, books, loans }) => {
 		setLibrary(library);
 	};
 
+	const getListLoans = () => {
+		const listLoans = loans.map((loan) => {
+			const student = students.find(
+				(student) => student.student_id === loan.student_id
+			);
+			const book = books.find((book) => book.book_id === loan.book_id);
+			return {
+				...loan,
+				student_name: student.student_name,
+				book_name: book.book_name,
+			};
+		});
+		setListLoans(listLoans);
+	};
+
 	const getStudentsActive = () => {
 		const student = students.filter((student) => student.status === "Active");
 		setStudentsActive(student);
@@ -51,6 +67,11 @@ const Loans = ({ students, books, loans }) => {
 	const handleLibrary = () => {
 		getLibrary();
 		setShow("library");
+	};
+
+	const handleListLoans = () => {
+		getListLoans();
+		setShow("listLoans");
 	};
 
 	return (
@@ -73,7 +94,7 @@ const Loans = ({ students, books, loans }) => {
 								className={`border border-blue-500 hover:bg-blue-700 hover:text-white font-bold py-2 px-4 rounded mt-8" ${
 									show === "listLoan" && "bg-blue-700 text-white"
 								}`}
-								onClick={() => setShow("listLoan")}
+								onClick={handleListLoans}
 							>
 								List Loan
 							</button>
@@ -90,11 +111,11 @@ const Loans = ({ students, books, loans }) => {
 				</div>
 			</div>
 
-			<div className="min-h-screen flex flex-col space-y-6 items-center px-8 my-6">
+			<div className="min-h-screen flex flex-col space-y-6 items-center px-8 my-6 overflow-x-auto">
 				{show === "library" && (
 					<Library showLoans={false} libraries={library} />
 				)}
-				{show === "listLoan" && <ListLoans loans={loans} />}
+				{show === "listLoans" && <ListLoans loans={listLoans} />}
 				{show === "inputLoan" && (
 					<>
 						{step === 1 && (

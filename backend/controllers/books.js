@@ -13,29 +13,11 @@ const getAllBooks = async (req, res) => {
 	}
 };
 
-// get book by id
-const getBookById = async (req, res) => {
-	const book_id = req.params.book_id;
-	try {
-		const book = await Book.findOne({
-			where: {
-				book_id: book_id,
-			},
-		});
-		res.status(200).json({
-			message: "get book by id success",
-			data: book,
-		});
-	} catch (error) {
-		res.json({ message: error.message });
-	}
-};
-
 // create book
 const createBook = async (req, res) => {
 	const { book_name, author, publisher, isbn_number } = req.body;
 	try {
-		const book = await Book.create({
+		await Book.create({
 			book_name: book_name,
 			author: author,
 			publisher: publisher,
@@ -43,7 +25,6 @@ const createBook = async (req, res) => {
 		});
 		res.status(200).json({
 			message: "create book success",
-			data: book,
 		});
 	} catch (error) {
 		res.json({ message: error.message });
@@ -55,7 +36,7 @@ const updateBook = async (req, res) => {
 	const book_id = req.params.book_id;
 	const { book_name, author, publisher, isbn_number } = req.body;
 	try {
-		const book = await Book.update(
+		await Book.update(
 			{
 				book_name: book_name,
 				author: author,
@@ -71,7 +52,6 @@ const updateBook = async (req, res) => {
 		);
 		res.status(200).json({
 			message: "update book success",
-			data: book,
 		});
 	} catch (error) {
 		res.json({ message: error.message });
@@ -82,14 +62,13 @@ const updateBook = async (req, res) => {
 const deleteBook = async (req, res) => {
 	const book_id = req.params.book_id;
 	try {
-		const book = await Book.destroy({
+		await Book.destroy({
 			where: {
 				book_id: book_id,
 			},
 		});
 		res.status(200).json({
 			message: "delete book success",
-			data: book,
 		});
 	} catch (error) {
 		res.json({ message: error.message });
@@ -99,7 +78,6 @@ const deleteBook = async (req, res) => {
 // export all functions
 module.exports = {
 	getAllBooks,
-	getBookById,
 	createBook,
 	updateBook,
 	deleteBook,

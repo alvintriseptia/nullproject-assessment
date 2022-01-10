@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 const EditBook = ({ book, setShowEditBook }) => {
 	const [message, setMessage] = useState("");
 	const [bookName, setBookName] = useState("");
@@ -9,30 +8,29 @@ const EditBook = ({ book, setShowEditBook }) => {
 
 	const id = book.book_id;
 	const updateBook = async (e) => {
-		e.preventDefault();
 		const book = {
 			book_name: bookName,
 			author: bookAuthor,
 			publisher: publisher,
 			isbn_number: isbn,
 		};
-		console.log(book);
 		try {
-			await fetch(`http://localhost:8000/books/${id}`, {
+			const response = await fetch(`http://localhost:8000/books/${id}`, {
 				method: "PATCH",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify(book),
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.message) {
-						setMessage(data.message);
-					}
-				});
+			});
+			const data = await response.json();
+			if (data.message) {
+				if (data.message.includes("success")) {
+					window.location.reload();
+				}
+				setMessage(data.message);
+			}
 		} catch (error) {
-			setMessage(error);
+			throw error;
 		}
 	};
 
@@ -47,13 +45,14 @@ const EditBook = ({ book, setShowEditBook }) => {
 		<>
 			{book.book_id && (
 				<div className="flex justify-center">
-					{message !== "" && <p>{message}</p>}
 					<form
 						onSubmit={updateBook}
 						className="flex flex-col space-y-5 bg-gradient-to-br from-violet-300 to-pink-300 p-10 rounded-xl shadow-lg"
 					>
+						{message !== "" && (
+							<p className="text-center font-bold">{message}</p>
+						)}
 						<h2 className="text-center text-2xl font-bold">Edit Book</h2>
-
 						<div className="flex space-x-10 items-center">
 							<label className="w-24">Book Name: </label>
 							<input

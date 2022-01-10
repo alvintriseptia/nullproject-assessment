@@ -9,7 +9,7 @@ const CreateStudent = (props) => {
 	const [status, setStatus] = useState("Active");
 
 	const handleSubmit = async (e) => {
-		const book = {
+		const librarian = {
 			employee_id: employeeId,
 			employee_name: employeeName,
 			email: email,
@@ -17,21 +17,22 @@ const CreateStudent = (props) => {
 			status: status,
 		};
 		try {
-			await fetch("http://localhost:8000/librarians", {
+			const response = await fetch("http://localhost:8000/librarians", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(book),
-			})
-				.then((res) => res.json())
-				.then((data) => {
-					if (data.message) {
-						setMessage(data.message);
-					}
-				});
+				body: JSON.stringify(librarian),
+			});
+			const data = await response.json();
+			if (data.message) {
+				if (data.message.includes("success")) {
+					window.location.reload();
+				}
+				setMessage(data.message);
+			}
 		} catch (error) {
-			setMessage(error);
+			throw error;
 		}
 	};
 
@@ -41,6 +42,7 @@ const CreateStudent = (props) => {
 				onSubmit={handleSubmit}
 				className="flex flex-col space-y-5 bg-gradient-to-r from-cyan-500 to-blue-500 p-10 rounded-xl shadow-lg"
 			>
+				{message !== "" && <p className="text-center font-bold">{message}</p>}
 				<h2 className="text-center text-2xl font-bold">Add Librarian</h2>
 				<div className="flex space-x-10 items-center">
 					<label className="w-32">Employee ID: </label>
@@ -51,6 +53,7 @@ const CreateStudent = (props) => {
 						type="text"
 						onChange={(e) => setEmployeeId(e.target.value)}
 						value={employeeId}
+						required
 					/>
 				</div>
 				<div className="flex space-x-10 items-center">
@@ -60,6 +63,7 @@ const CreateStudent = (props) => {
 						type="text"
 						onChange={(e) => setEmployeeName(e.target.value)}
 						value={employeeName}
+						required
 					/>
 				</div>
 				<div className="flex space-x-10 items-center">
@@ -69,6 +73,7 @@ const CreateStudent = (props) => {
 						onChange={(e) => setEmail(e.target.value)}
 						value={email}
 						type="email"
+						required
 					/>
 				</div>
 				<div className="flex space-x-10 items-center">
@@ -78,6 +83,7 @@ const CreateStudent = (props) => {
 						onChange={(e) => setPassword(e.target.value)}
 						value={password}
 						type="password"
+						required
 					/>
 				</div>
 				<div className="flex space-x-10 items-center">

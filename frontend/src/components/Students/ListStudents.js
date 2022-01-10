@@ -10,7 +10,7 @@ const ListStudents = ({ students, getStudentById, hidden, showLoans }) => {
 	};
 
 	return (
-		<div className="px-8 mt-8">
+		<div className="px-8 mt-8 overflow-x-auto">
 			<table className="w-full">
 				<thead>
 					<tr>
